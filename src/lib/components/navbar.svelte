@@ -7,7 +7,7 @@
     let currentPage = props.currentPage;
 </script>
 
-<div class="pb-6 pl-10 pr-10 pt-6">
+<div class="pb-6 pl-10 pr-10 pt-6 drop-shadow-glow">
 	<Menubar.Root>
 		<Menubar.Menu>
 			<Button variant="ghost" class="navbarLink {currentPage == "Home" ? "font-bold" : ""}">

@@ -7,7 +7,7 @@
 
 <table style="width: 100%; height: 570px;">
 	<tbody class="maxSize">
-        <tr class="h-32"></tr>
+        <tr class="h-16"></tr>
 		<tr class="maxSize" style="height:330px">
 			<td style="width: 49.99%; height: 100%;">
                 <div class="m-auto text-center w-fit">

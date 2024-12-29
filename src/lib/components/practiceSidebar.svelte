@@ -1,27 +1,36 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card';
-	import * as Select from '$lib/components/ui/select';
+	import * as Select from '$lib/components/ui/select/index.js';
+    import { Slider } from "$lib/components/ui/slider/index.js";
 
 	const topics = [
 		{ value: 'algebra', label: 'Algebra' },
-		{ value: 'intermediate_algebra', label: 'Intermediate Algebra' }
+		{ value: 'intermediate_algebra', label: 'Intermediate Algebra' },
+		{ value: 'prealgebra', label: 'Prealgebra' },
+		{ value: 'geometry', label: 'Geometry' },
+		{ value: 'number_theory', label: 'Number Theory' },
+		{ value: 'counting_probability', label: 'Counting and Probability' },
+		{ value: 'precalculus', label: 'Precalculus' }
 	];
+
+	let topic = $state<string>('algebra');
+	const selectedTopicName = $derived(
+		topic ? topics.find((topics) => topics.value === topic)?.label : 'Select a topic'
+	);
+
+    let difficulty = $state<string>('1');
 </script>
 
-<Card.Root class="m-8 min-w-96">
+<Card.Root class="m-8 min-w-96 max-w-96 drop-shadow-glow">
 	<Card.Header>
-		<Card.Title>Questions</Card.Title>
+		<Card.Title class="text-2xl font-bold">Questions</Card.Title>
 	</Card.Header>
 	<Card.Content>
-		Topic:
-		<Select.Root
-			selected={{
-				value: "algebra",
-				label: "Algebra"
-			}}
-		>
-			<Select.Trigger class="w-[180px]">
-				<Select.Value>Algebra</Select.Value>
+        <span class="text-lg font-semibold">Topic: </span> <br>
+		
+        <Select.Root type="single" onValueChange={(v) => (topic = v)}>
+			<Select.Trigger aria-label="Select a theme">
+				{selectedTopicName}
 			</Select.Trigger>
 			<Select.Content>
 				<Select.Item value="algebra">Algebra</Select.Item>
@@ -34,11 +43,30 @@
 			</Select.Content>
 		</Select.Root>
 
-		Question Difficulty
+        <br>
+		<span class="text-lg font-semibold">Question Difficulty: </span> <br>
+
+        <Select.Root type="single" onValueChange={(v) => (difficulty = v)}>
+			<Select.Trigger aria-label="Select a difficulty">
+				{difficulty}
+			</Select.Trigger>
+			<Select.Content>
+				<Select.Item value="1">1</Select.Item>
+                <Select.Item value="2">2</Select.Item>
+                <Select.Item value="3">3</Select.Item>
+                <Select.Item value="4">4</Select.Item>
+                <Select.Item value="5">5</Select.Item>
+			</Select.Content>
+		</Select.Root>
 	</Card.Content>
 	<Card.Header>
-		<Card.Title>Title</Card.Title>
-		<Card.Description>Description</Card.Description>
+		<Card.Title class="text-2xl font-bold">Recent Questions</Card.Title>
 	</Card.Header>
-	<Card.Content>Content</Card.Content>
+	<Card.Content>
+        Add Recent Questions Here <br>
+        Add Recent Questions Here <br>
+        Add Recent Questions Here <br>
+        Add Recent Questions Here <br>  
+        Add Recent Questions Here
+    </Card.Content>
 </Card.Root>
