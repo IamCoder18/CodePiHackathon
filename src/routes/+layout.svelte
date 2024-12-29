@@ -4,7 +4,7 @@
 	let { children } = $props();
 </script>
 
-<img src={backgroundImage} class="background-image-helper" alt="">
+<img src={backgroundImage} class="background-image-helper no-interact" alt="">
 
 {@render children()}
 

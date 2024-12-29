@@ -11,7 +11,7 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint .",
-        "docker": "docker buildx build --platform linux/amd64,linux/arm64/v8 -t iamcoder18/codepi --push ."
+		"docker": "docker buildx build --platform linux/amd64,linux/arm64/v8 -t iamcoder18/codepi --push ."
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.2.3",
@@ -22,6 +22,7 @@
 		"autoprefixer": "^10.4.20",
 		"bits-ui": "^0.21.16",
 		"clsx": "^2.1.1",
+		"cmdk-sv": "^0.0.18",
 		"eslint": "^9.7.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.36.0",
@@ -42,6 +43,8 @@
 		"@tailwindcss/container-queries": "^0.1.1",
 		"@tailwindcss/forms": "^0.5.9",
 		"@tailwindcss/typography": "^0.5.15",
+		"katex": "^0.16.18",
+		"lucide-svelte": "^0.469.0",
 		"svelte-radix": "^2.0.1"
 	}
 }

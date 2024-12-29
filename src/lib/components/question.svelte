@@ -3,53 +3,90 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Textarea } from '$lib/components/ui/textarea';
 	import { Input } from '$lib/components/ui/input';
+	import katex from 'katex';
 	import { browser } from '$app/environment';
+
+	let outputString = '';
+
+	function renderMath(input: string, displayMode: boolean): string {
+		return katex.renderToString(String.raw({ raw: input }), {
+			displayMode: displayMode,
+            throwOnError: false
+		});
+	}
+
+	function processString(input: string): string {
+		// Finds $$ and \(\)
+		let inlineRegex = [/(?<!\\)\$\s*[\s\S]*?(?<!\\)\$/g, /(?<!\\)\\\(\s*[\s\S]*?(?<!\\)\\\)/g];
+		// Finds $$$$ and \[\]
+		let displayRegex = [/(?<!\\)\$\$\s*[\s\S]*?(?<!\\)\$\$/g, /(?<!\\)\\\[\s*[\s\S]*?(?<!\\)\\\]/g];
+
+		let output = input;
+
+		
+        let match = undefined;
+        while ((match = inlineRegex[0].exec(output)) != null) {
+            const startIndex = match.index;
+            const endIndex = match.index + match[0].length;
+
+            let value = renderMath(match[0].substring(1, match[0].length - 1), false);
+            output =
+                output.substring(0, startIndex) + value + output.substring(endIndex, output.length);
+        }
+
+        match = undefined;
+        while ((match = inlineRegex[1].exec(output)) != null) {
+            const startIndex = match.index;
+            const endIndex = match.index + match[0].length;
+
+            let value = renderMath(match[0].substring(2, match[0].length - 2), false);
+            output =
+                output.substring(0, startIndex) + value + output.substring(endIndex, output.length);
+        }
+
+        match = undefined;
+        while ((match = displayRegex[0].exec(output)) != null) {
+            const startIndex = match.index;
+            const endIndex = match.index + match[0].length;
+
+            let value = renderMath(match[0].substring(1, match[0].length - 1), true);
+            output =
+                output.substring(0, startIndex) + value + output.substring(endIndex, output.length);
+        }
+
+        match = undefined;
+        while ((match = displayRegex[1].exec(output)) != null) {
+            const startIndex = match.index;
+            const endIndex = match.index + match[0].length;
+
+            let value = renderMath(match[0].substring(2, match[0].length - 2), true);
+            output =
+                output.substring(0, startIndex) + value + output.substring(endIndex, output.length);
+        }
+
+        return output;
+	}
+
+	const inputString = String.raw`Let \[f(x) = \begin{cases} 2x^2 - 3&\text{if } x\le 2, \\ ax + 4 &\text{if } x>2. \end{cases} \]Find $a$ if the graph of $y=f(x)$ is continuous (which means the graph can be drawn without lifting your pencil from the paper).`;
+	outputString = processString(inputString);
 </script>
 
 {#if browser}
-	<script>
-		function renderMath() {
-			console.log(MathJax);
-
-			const input = document.getElementById('input').value;
-			const output = document.getElementById('output');
-
-			// Create a temporary span element to render the MathJax
-			const tempSpan = output.cloneNode();
-			tempSpan.innerHTML = `$$${input}$$`;
-
-			// Render MathJax within the temporary span
-			MathJax.typesetPromise([tempSpan]).then(() => {
-				output.innerHTML = '';
-
-				// Append the rendered content to the output div
-				output.appendChild(tempSpan);
-			});
-		}
-
-		document.getElementById('input').addEventListener('keyup', renderMath);
-	</script>
+	<link
+		rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/katex@0.16.18/dist/katex.min.css"
+		integrity="sha384-veTAhWILPOotXm+kbR5uY7dRamYLJf58I7P+hJhjeuc7hsMAkJHTsPahAl0hBST0"
+		crossorigin="anonymous"
+	/>
 {/if}
 
 <Card.Root>
 	<Card.Header>
-		<Card.Title>
-			{@html `
-
-            <p>Let
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(x,y)</annotation></semantics></math>
-be an ordered pair of real numbers that satisfies the equation
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup><mo>=</mo><mn>14</mn><mi>x</mi><mo>+</mo><mn>48</mn><mi>y</mi></mrow><annotation encoding="application/x-tex">x^2+y^2=14x+48y</annotation></semantics></math>.
-What is the minimum value of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math>?</p>
-
-`}
-		</Card.Title>
+		<Card.Title>{@html outputString}</Card.Title>
 		<Card.Description>Algebra - Level 5</Card.Description>
 	</Card.Header>
 	<Card.Content>
 		Steps:
-		<div id="output" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;"></div>
 		<Textarea id="input" />
 		<br />
 		Answer:

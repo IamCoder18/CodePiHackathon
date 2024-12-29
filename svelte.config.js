@@ -14,7 +14,8 @@ const config = {
 		adapter: adapter(),
         alias: {
             "@lib/*": "./src/lib/*",
-            "@images/*": "./src/images/*"
+            "@images/*": "./src/images/*",
+            "@node_modules/*": "./node_modules/*"
         },
 	}
 };
