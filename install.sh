@@ -21,11 +21,12 @@ if ! which docker >/dev/null 2>&1; then
 fi
 
 # Download docker-compose.yaml file
-echo "Downloading docker-compose.yaml..."
-sudo curl -O https://raw.githubusercontent.com/IamCoder18/CodePiHackathon/refs/heads/master/docker-compose.yaml &> /dev/null
+echo "Downloading files..."
+mkdir ~/codepi &> /dev/null
+sudo curl -O -L https://raw.githubusercontent.com/IamCoder18/CodePiHackathon/refs/heads/master/docker-compose.yaml -o ~/codepi/docker-compose.yaml &> /dev/null
 
 # Run docker compose up -d
 echo "Starting docker containers..."
 sudo docker compose up -d &> /dev/null
 
-echo "Done! Web server started on 0.0.0.0:3000"
+echo "Done installing."

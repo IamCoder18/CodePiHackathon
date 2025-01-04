@@ -11,7 +11,7 @@
 		<tr class="maxSize" style="height:330px">
 			<td style="width: 49.99%; height: 100%;">
                 <div class="m-auto text-center w-fit">
-                    <h1 class="text-6xl font-extrabold tracking-tight lg:text-5xl">Welcome to Aarav Labs</h1>
+                    <h1 class="text-6xl font-extrabold tracking-tight lg:text-5xl drop-shadow-glow">Welcome to Aarav Labs</h1>
                     <h1 class="text-xl font-semibold tracking-tight lg:text-2xl w-3/4 m-auto mt-8">Learn Prealgebra, Algebra, Geometry, Counting & Probability, Number Theory, Precalculus, and more with our large set of questions and AI analysis.</h1>
                 </div>
             </td>
