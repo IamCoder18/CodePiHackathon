@@ -1,6 +1,13 @@
 <script lang="ts">
     import Navbar from '$lib/components/navbar.svelte';
     import Question from '$lib/components/question.svelte';
+
+    let { data } = $props();
+
+    $effect(()=>{
+        console.log(data.cachedData)
+    })
+
 </script>
 
 <Navbar currentPage="Home"></Navbar>
